@@ -8,8 +8,28 @@ app.use(cors({
     credentials: true,
 }))
 
-app.use(express.json({limit: '16kb'}))
-app.use(express.urlencoded({limit: '16kb',extended:true}))
+app.use(express.json())
+app.use(express.urlencoded())
 app.use(express.static('public'))
 app.use(cookieParser())
-export default app;
+
+//
+// Import routes
+import userRouter from './routes/user.routes.js';
+  
+
+//routes decalartion
+app.use("/api/v1/users",userRouter)
+
+app.get("/test", (req, res) => {
+    res.send("🎉 Server is working!");
+  });
+
+// Handle 404 errors
+
+app.post("/testing", (req, res) => {
+    console.log(req.body);
+    res.send("Testing endpoint received data");
+  })
+
+export {app};
